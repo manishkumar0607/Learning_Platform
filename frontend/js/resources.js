@@ -73,7 +73,7 @@ let searchQuery = '';
 
 async function loadResources() {
   try {
-    const res = await fetch('https://learnos-api.onrender.com/api/resources');
+    const res = await fetch('https://learning-platform-pe0r.onrender.com/api/resources');
     if (res.ok) {
       const data = await res.json();
       allResources = data.length ? data : DEMO_RESOURCES;
