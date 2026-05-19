@@ -13,8 +13,8 @@
 
 | Service | URL |
 |---------|-----|
-| Frontend | https://learnos.vercel.app |
-| Backend API | https://learnos-api.onrender.com |
+| Frontend | https://learning-platform-1-79r5.onrender.com |
+| Backend API | https://learning-platform-pe0r.onrender.com |
 
 ---
 
