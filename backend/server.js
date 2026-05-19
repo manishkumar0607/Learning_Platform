@@ -1,23 +1,18 @@
 const express  = require('express');
 const mongoose = require('mongoose');
 const cors     = require('cors');
-
-const cors = require('cors');  // ONLY ONE
-
-app.use(cors({
-  origin: [
-    'http://localhost:5000',
-    'https://learning-platform-1-79r5.onrender.com'  // <-- your frontend URL
-  ],
-  credentials: true
-}));
-
 require('dotenv').config();
 
 const app = express();
 
 // ── Middleware ────────────────────────────────────────────────
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5000',
+    'https://learning-platform-1-79r5.onrender.com'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 
 // ── Routes ────────────────────────────────────────────────────
@@ -34,7 +29,7 @@ mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✓ MongoDB connected');
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`✓ Server running on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`✓ Server running on port ${PORT}`));
   })
   .catch(err => {
     console.error('✗ MongoDB connection failed:', err.message);
