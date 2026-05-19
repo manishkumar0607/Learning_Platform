@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LearnOS — Free Open Source Resources</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Learn<span>OS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Resources</a>
+      <a href="#" id="nav-username" style="display:none;color:var(--accent)"></a>
+      <a href="register.html" id="nav-register" class="btn btn-outline" style="font-size:0.78rem;padding:0.4rem 1rem;">Register</a>
+      <a href="login.html" id="nav-login" class="btn btn-primary" style="font-size:0.78rem;padding:0.4rem 1rem;">Login</a>
+      <button id="nav-logout" class="btn btn-outline" style="display:none;font-size:0.78rem;padding:0.4rem 1rem;" onclick="logout()">Logout</button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">✦ 100% Free &amp; Open Source</div>
+    <h1>Learn anything.<br><span class="accent">Open source.</span><br><span class="accent2">No paywalls.</span></h1>
+    <p>A curated collection of free learning resources, tools, and documentation — handpicked for developers, designers, and curious minds.</p>
+    <div class="hero-actions">
+      <a href="register.html" class="btn btn-primary">Get Started →</a>
+      <a href="#resources" class="btn btn-outline">Browse Resources</a>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <span class="search-icon">⌕</span>
+    <input type="text" id="search-input" placeholder="Search resources, tools, docs..." />
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="tab active" data-cat="All">All</button>
+    <button class="tab" data-cat="Programming">Programming</button>
+    <button class="tab" data-cat="Design">Design</button>
+    <button class="tab" data-cat="Database">Database</button>
+    <button class="tab" data-cat="DevOps">DevOps</button>
+    <button class="tab" data-cat="AI/ML">AI / ML</button>
+    <button class="tab" data-cat="General">General</button>
+  </div>
+
+  <!-- RESOURCES GRID -->
+  <section class="resources-section" id="resources">
+    <div class="section-header">
+      <span class="section-title">Resources</span>
+      <span class="count-badge" id="count-badge">0 links</span>
+    </div>
+    <div class="grid" id="resources-grid">
+      <!-- Skeleton loaders -->
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-line" style="width:30%;margin-bottom:1rem;"></div>
+        <div class="skeleton skeleton-line" style="width:80%;"></div>
+        <div class="skeleton skeleton-line" style="width:60%;"></div>
+        <div class="skeleton skeleton-line" style="width:90%;margin-top:0.5rem;"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-line" style="width:25%;margin-bottom:1rem;"></div>
+        <div class="skeleton skeleton-line" style="width:70%;"></div>
+        <div class="skeleton skeleton-line" style="width:55%;"></div>
+        <div class="skeleton skeleton-line" style="width:85%;margin-top:0.5rem;"></div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-line" style="width:35%;margin-bottom:1rem;"></div>
+        <div class="skeleton skeleton-line" style="width:75%;"></div>
+        <div class="skeleton skeleton-line" style="width:65%;"></div>
+        <div class="skeleton skeleton-line" style="width:80%;margin-top:0.5rem;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2024 LearnOS — Free knowledge for everyone</span>
+    <div style="display:flex;gap:1.5rem;">
+      <a href="index.html">Home</a>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+    </div>
+  </footer>
+
+  <script src="js/resources.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // Update nav based on login state
+    function updateNav() {
+      const token = localStorage.getItem('token');
+      const name  = localStorage.getItem('username');
+      document.getElementById('nav-register').style.display = token ? 'none' : '';
+      document.getElementById('nav-login').style.display    = token ? 'none' : '';
+      document.getElementById('nav-logout').style.display   = token ? '' : 'none';
+      const u = document.getElementById('nav-username');
+      if (token && name) { u.style.display = ''; u.textContent = '[ ' + name + ' ]'; }
+      else { u.style.display = 'none'; }
+    }
+    updateNav();
+  </script>
+</body>
+</html>

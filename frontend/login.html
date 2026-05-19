@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — LearnOS</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">Learn<span>OS</span></a>
+    <div class="nav-links">
+      <a href="index.html">Resources</a>
+      <a href="register.html" class="btn btn-primary" style="font-size:0.78rem;padding:0.4rem 1rem;">Register</a>
+    </div>
+  </nav>
+
+  <div class="auth-wrapper">
+    <div class="auth-box">
+
+      <div class="hero-tag" style="margin-bottom:1.2rem;">✦ Welcome back</div>
+
+      <h2>Log in</h2>
+      <p class="subtitle">Access your LearnOS account.</p>
+
+      <!-- Message area -->
+      <div class="msg" id="msg"></div>
+
+      <!-- Form -->
+      <div class="form-group">
+        <label for="login-name">Username</label>
+        <input type="text" id="login-name" placeholder="Your username" autocomplete="username" />
+      </div>
+
+      <div class="form-group">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="Your password" autocomplete="current-password" />
+      </div>
+
+      <button class="btn btn-primary btn-full" onclick="login()" id="login-btn">
+        Log In →
+      </button>
+
+      <div class="auth-divider">or</div>
+
+      <div class="auth-switch">
+        Don't have an account? <a href="register.html">Register here</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="js/auth.js"></script>
+  <script>
+    async function login() {
+      const name     = document.getElementById('login-name').value.trim();
+      const password = document.getElementById('login-password').value;
+      const msg      = document.getElementById('msg');
+      const btn      = document.getElementById('login-btn');
+
+      msg.className = 'msg';
+      msg.textContent = '';
+
+      if (!name || !password) {
+        return showMsg(msg, 'error', 'Please fill in all fields.');
+      }
+
+      btn.textContent = 'Logging in...';
+      btn.disabled = true;
+
+      try {
+        const res  = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, password })
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+          showMsg(msg, 'error', data.message || 'Login failed.');
+        } else {
+          // Save token and username
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('username', name);
+          showMsg(msg, 'success', '✓ Logged in! Redirecting...');
+          setTimeout(() => window.location.href = 'index.html', 1200);
+        }
+      } catch (e) {
+        showMsg(msg, 'error', 'Cannot connect to server. Is it running?');
+      }
+
+      btn.textContent = 'Log In →';
+      btn.disabled = false;
+    }
+
+    function showMsg(el, type, text) {
+      el.className = 'msg ' + type + ' show';
+      el.textContent = text;
+    }
+
+    // Redirect if already logged in
+    if (localStorage.getItem('token')) {
+      window.location.href = 'index.html';
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') login();
+    });
+  </script>
+</body>
+</html>
