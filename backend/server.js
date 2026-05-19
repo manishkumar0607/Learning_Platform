@@ -2,16 +2,15 @@ const express  = require('express');
 const mongoose = require('mongoose');
 const cors     = require('cors');
 
-const cors = require('cors');
+const cors = require('cors');  // ONLY ONE
 
 app.use(cors({
   origin: [
-    'http://localhost:5000',  // keep for local testing
-    'https://learning-platform-1-79r5.onrender.com'  // your new frontend URL
+    'http://localhost:5000',
+    'https://learning-platform-1-79r5.onrender.com'  // <-- your frontend URL
   ],
   credentials: true
 }));
-
 
 require('dotenv').config();
 
